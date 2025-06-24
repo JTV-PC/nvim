@@ -1,3 +1,5 @@
+-- Notifications and center vim commands
+
 return{
   "folke/noice.nvim",
   event = "VeryLazy",

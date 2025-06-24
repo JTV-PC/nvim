@@ -1,3 +1,5 @@
+-- on screen quick jumps
+
 return{
 	"folke/flash.nvim",
 	event = "VeryLazy",

@@ -1,3 +1,5 @@
+-- Tree like file system representation 
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",

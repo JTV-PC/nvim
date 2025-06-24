@@ -1,3 +1,5 @@
+-- for floating terminal
+
 return {
   "numToStr/FTerm.nvim",
   config = function()

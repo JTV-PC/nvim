@@ -1,3 +1,6 @@
+-- quick switch files within a collection
+
+
 local conf = require('telescope.config').values
 local themes = require('telescope.themes')
 
