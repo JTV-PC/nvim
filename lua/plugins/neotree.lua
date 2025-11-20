@@ -1,27 +1,47 @@
--- Tree like file system representation 
-
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim",
-    -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
-  },
-  lazy = false, -- neo-tree will lazily load itself
-  ---@module "neo-tree"
-  ---@type neotre.Config?
-  opts = {
-    -- fill any relevant options here
-    filesystem = {
-    filtered_items = {
-      visible = true,          -- Show filtered (hidden) files by default
-      show_hidden_count = true,
-      hide_dotfiles = false,   -- Don't hide dotfiles (e.g. .git, .env)
-      hide_gitignored = false, -- Don't hide files listed in .gitignore
-    },
-  },
-},
-  vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {})
+	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"MunifTanjim/nui.nvim",
+	},
+	lazy = false,
+	opts = {
+		filesystem = {
+			filtered_items = {
+				visible = true,
+				show_hidden_count = true,
+				hide_dotfiles = false,
+				hide_gitignored = false,
+			},
+		},
+	},
+	config = function()
+		-- Toggle
+		vim.keymap.set("n", "<leader>t", ":Neotree toggle<CR>", {})
+
+		-- Change directory interactively
+		vim.keymap.set("n", "<leader>nd", function()
+			vim.ui.input({ prompt = "New directory: " }, function(dir)
+				if dir and dir ~= "" then
+					require("neo-tree.command").execute({
+						action = "focus",
+						source = "filesystem",
+						position = "left",
+						dir = dir,
+					})
+				end
+			end)
+		end, { desc = "Neo-tree: Change directory" })
+
+		-- Change root to current file folder
+		vim.keymap.set("n", "<leader>nr", function()
+			local file_dir = vim.fn.expand("%:p:h")
+			require("neo-tree.command").execute({
+				action = "focus",
+				dir = file_dir,
+			})
+		end, { desc = "Neo-tree: Root to current file" })
+	end,
 }
